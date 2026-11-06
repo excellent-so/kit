@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excellent kit · Styleguide</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%20width='16'%20height='16'%20fill='currentColor'%3E%3Cstyle%3Esvg{color:%230a0a0a}@media%20(prefers-color-scheme:dark){svg{color:%23f2f2f2}}%3C/style%3E%3Crect%20x='1'%20y='1'%20width='6'%20height='6'/%3E%3Ccircle%20cx='12'%20cy='4'%20r='3'/%3E%3Crect%20x='1'%20y='10'%20width='14'%20height='5'%20rx='2.5'/%3E%3C/svg%3E">
+<meta name="description" content="Excellent's design kit: tokens as CSS variables and plain components for HTML and any framework, light and dark, comfortable and compact. MIT.">
+<script>try{if(localStorage.getItem('ex-theme')==='dark')document.documentElement.classList.add('theme-dark')}catch(e){}</script>
+<link rel="stylesheet" href="../fonts.css">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../kit.css">
+<style>
+/* Styleguide chrome only (sg-). Everything else on this page is the kit. */
+.sg-section { scroll-margin-top: calc(var(--app-bar-h) + 16px); }
+.sg-section + .sg-section { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--color-border); }
+.sg-section > .ex-section-header { margin-bottom: 20px; }
+.sg-lede { max-width: 62ch; color: var(--color-body); font-size: var(--text-ui); line-height: 1.6; }
+.sg-lede + .sg-lede { margin-top: 12px; }
+.sg-hero { padding: 16px 0 8px; }
+.sg-hero h1 { font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 400; line-height: 1.08; letter-spacing: -0.02em; }
+.sg-hero h1 span { color: var(--color-faint); }
+.sg-hero .sg-lede { margin-top: 16px; }
+.sg-hero .ex-toolbar { margin-top: 24px; }
+.sg-band { height: 72px; margin: 32px 0 0; border-radius: var(--radius-lg); -webkit-mask: linear-gradient(90deg, #000, #000 30%, transparent 85%); mask: linear-gradient(90deg, #000, #000 30%, transparent 85%); }
+.sg-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.sg-row + .sg-row { margin-top: 16px; }
+.sg-stack > * + * { margin-top: 16px; }
+.sg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: 16px; }
+.sg-grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); }
+.sg-note { margin-top: 12px; color: var(--color-subtle); font-size: var(--text-meta); }
+.sg-rules { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; counter-reset: r; }
+.sg-rules li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; max-width: 72ch; counter-increment: r; }
+.sg-rules li::before { content: counter(r); display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); color: var(--color-subtle); font-family: var(--font-mono); font-size: var(--text-2xs); }
+.sg-rules strong { color: var(--color-strong); font-weight: 600; }
+.sg-swatch { overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-card); }
+.sg-swatch__chip { height: 56px; border-bottom: 1px solid var(--color-border); }
+.sg-swatch__text { display: grid; gap: 2px; padding: 8px 12px 10px; }
+.sg-swatch__name { color: var(--color-strong); font-family: var(--font-mono); font-size: var(--text-2xs); }
+.sg-swatch__value { color: var(--color-subtle); font-family: var(--font-mono); font-size: var(--text-2xs); }
+.sg-swatch__use { color: var(--color-subtle); font-size: var(--text-2xs); }
+.sg-type > div { display: grid; grid-template-columns: 9rem 1fr; gap: 16px; align-items: baseline; padding: 12px 0; border-top: 1px solid var(--color-border); }
+.sg-type > div:last-child { border-bottom: 1px solid var(--color-border); }
+.sg-type .sg-meta { color: var(--color-subtle); font-family: var(--font-mono); font-size: var(--text-2xs); }
+.sg-scale { display: grid; gap: 8px; }
+.sg-scale > div { display: grid; grid-template-columns: 9rem 1fr; gap: 16px; align-items: center; }
+.sg-scale i { display: block; height: 12px; border-radius: 2px; background: var(--color-strong); }
+.sg-corners { display: flex; flex-wrap: wrap; gap: 16px; }
+.sg-corners div { display: grid; place-items: center; width: 88px; height: 64px; border: 1px solid var(--color-border-strong); background: var(--color-card); color: var(--color-subtle); font-family: var(--font-mono); font-size: var(--text-2xs); }
+.sg-demo-shell { overflow: hidden; height: 420px; border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.sg-demo-shell .ex-shell { min-height: 0; height: 100%; }
+.sg-demo-shell .ex-sidebar { position: relative; height: 100%; }
+.sg-demo-shell .ex-main { overflow: auto; height: calc(100% - var(--app-bar-h)); }
+.sg-glyphs { display: flex; flex-wrap: wrap; gap: 24px; color: var(--color-strong); }
+.sg-glyphs span { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--color-subtle); }
+.sg-glyphs .ex-glyph { color: var(--color-strong); transform: scale(1.6); }
+.sg-marks { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 12px; }
+.sg-mark { display: grid; gap: 16px; margin: 0; padding: 20px 16px 14px; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-card); color: var(--color-strong); }
+.sg-mark > svg { width: 48px; height: 48px; }
+.sg-mark figcaption { display: flex; align-items: center; gap: 8px; font-size: var(--text-sm); font-weight: 600; }
+.sg-foot { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--color-border); }
+@media (max-width: 640px) { .sg-type > div, .sg-scale > div { grid-template-columns: 1fr; gap: 4px; } .sg-density { display: none; } }
+</style>
+</head>
+<body class="ex-page">
+<a class="ex-skip" href="#main">Skip to content</a>
+<div class="ex-shell" id="shell">
+  <aside class="ex-sidebar" aria-label="Sections">
+    <a class="ex-sidebar__brand" href="#top"><svg class="ex-mark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="6"/><circle cx="12" cy="4" r="3"/><rect x="1" y="10" width="14" height="5" rx="2.5"/></svg>Excellent kit <span class="ex-badge ex-badge--count">0.2.1</span></a>
+    <nav class="ex-sidebar__body">
+      <p class="ex-nav-label">Start</p>
+      <ul class="ex-nav">
+        <li><a href="#top" aria-current="page">Overview</a></li>
+        <li><a href="#rules">The rules</a></li>
+        <li><a href="#use">Using it</a></li>
+      </ul>
+      <p class="ex-nav-label">Foundations</p>
+      <ul class="ex-nav">
+        <li><a href="#colour">Colour</a></li>
+        <li><a href="#type">Type</a></li>
+        <li><a href="#space">Space and corners</a></li>
+        <li><a href="#glyphs">Glyphs</a></li>
+        <li><a href="#marks">Marks</a></li>
+      </ul>
+      <p class="ex-nav-label">Components</p>
+      <ul class="ex-nav">
+        <li><a href="#buttons">Buttons</a></li>
+        <li><a href="#badges">Badges and states</a></li>
+        <li><a href="#forms">Forms</a></li>
+        <li><a href="#surfaces">Cards and alerts</a></li>
+        <li><a href="#tables">Tables</a></li>
+        <li><a href="#numbers">Numbers and facts</a></li>
+        <li><a href="#heads">Heads and tabs</a></li>
+        <li><a href="#empty">Empty and loading</a></li>
+        <li><a href="#choosing">Choosing</a></li>
+        <li><a href="#floating">Menus, dialogs, toasts</a></li>
+        <li><a href="#reading">Reading</a></li>
+        <li><a href="#code">Code and commands</a></li>
+        <li><a href="#dither">The dither</a></li>
+        <li><a href="#shell-demo">The app shell</a></li>
+      </ul>
+    </nav>
+    <div class="ex-sidebar__foot"><p class="ex-made"><span>MIT</span><a href="https://github.com/excellent-so/kit">Code</a><a href="https://www.npmjs.com/package/@excellent-so/kit">npm</a></p></div>
+  </aside>
+
+  <div>
+    <header class="ex-topbar">
+      <button class="ex-btn ex-btn--ghost ex-btn--sm ex-btn--icon ex-menu-button" type="button" data-ex-nav-toggle aria-expanded="false" aria-controls="shell" aria-label="Sections">☰</button>
+      <ol class="ex-crumbs"><li><a href="#top">Kit</a></li><li aria-current="page" id="crumb">Overview</li></ol>
+      <div class="ex-topbar__end">
+        <div class="ex-toolbar sg-density" role="group" aria-label="Density">
+          <button class="ex-btn ex-btn--muted ex-btn--sm" type="button" data-sg-density="comfortable" aria-pressed="true">Comfortable</button>
+          <button class="ex-btn ex-btn--ghost ex-btn--sm" type="button" data-sg-density="compact" aria-pressed="false">Compact</button>
+        </div>
+        <button class="ex-btn ex-btn--outline ex-btn--sm" type="button" data-ex-theme-toggle aria-pressed="false">Dark</button>
+      </div>
+    </header>
+
+    <main class="ex-main" id="main">
+      <section class="sg-hero" id="top">
+        <h1>The parts Excellent is built from, <span>for anything you build</span></h1>
+        <p class="sg-lede">Design tokens as CSS variables, and plain components on top of them: buttons, badges, fields, cards, tables, the app shell. Light and dark, comfortable and compact. No framework, no build step and no dependencies, so a single-file viewer a CLI serves looks the same as a React app.</p>
+        <p class="sg-lede">It's the kit behind Excellent's admin and app, and behind screen-map, selfdocs, pressroom and the rest. MIT licensed.</p>
+        <div class="ex-toolbar">
+          <span class="ex-cmd"><code>npm i @excellent-so/kit</code><button type="button" data-ex-copy="npm i @excellent-so/kit">Copy</button></span>
+          <a class="ex-btn ex-btn--outline" href="https://github.com/excellent-so/kit">Code <span class="ex-glyph ex-glyph--arrow" aria-hidden="true"></span></a>
+        </div>
+        <div class="sg-band ex-dither" aria-hidden="true"></div>
+      </section>
+
+      <section class="sg-section" id="rules" aria-labelledby="h-rules">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-rules">The rules</h2><p class="ex-section-header__desc">Seven things every part keeps, so anything built from it reads as one family.</p></div></div>
+        <ol class="sg-rules">
+          <li><span><strong>Ink on white.</strong> Light by default, whatever the OS says. Dark is a choice the reader makes, and the page remembers it.</span></li>
+          <li><span><strong>Two colours mean something.</strong> Amber is for Verified, and red is for Returned or failed. Nothing else is coloured: every other state is an outline.</span></li>
+          <li><span><strong>A state never rests on colour alone.</strong> Every verdict and status badge carries a glyph: a stepped check, a way back, a cross, an open square.</span></li>
+          <li><span><strong>Controls have 4px corners and are 44px tall.</strong> Compact density draws 36px on a mouse or trackpad; touch keeps 44px.</span></li>
+          <li><span><strong>Surfaces are flat.</strong> A 1px hairline and 8px corners. Shadows are for things that float over the page.</span></li>
+          <li><span><strong>Tables, not paragraphs.</strong> Data goes in a table with numbers right-aligned in tabular figures; on a phone each row stacks.</span></li>
+          <li><span><strong>One focus ring.</strong> Everything a keyboard can reach shows the same 2px ring, and small text stays at 12px or larger.</span></li>
+        </ol>
+      </section>
+
+      <section class="sg-section" id="use" aria-labelledby="h-use">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-use">Using it</h2></div></div>
+        <div class="sg-grid sg-grid--2">
+          <div class="ex-card ex-card--tight">
+            <div class="ex-card__header"><div class="ex-card__title">In a page</div><div class="ex-card__desc">Link the files, put <code class="ex-code">ex-page</code> on the body, and use the classes.</div></div>
+            <pre class="ex-pre">&lt;link rel="stylesheet" href="@excellent-so/kit/fonts.css"&gt;
+&lt;link rel="stylesheet" href="@excellent-so/kit/tokens.css"&gt;
+&lt;link rel="stylesheet" href="@excellent-so/kit/kit.css"&gt;
+&lt;script src="@excellent-so/kit/kit.js" defer&gt;&lt;/script&gt;
+
+&lt;button class="ex-btn"&gt;Run the check&lt;/button&gt;
+&lt;span class="ex-badge ex-badge--verified"&gt;Verified&lt;/span&gt;</pre>
+          </div>
+          <div class="ex-card ex-card--tight">
+            <div class="ex-card__header"><div class="ex-card__title">In a single-file viewer</div><div class="ex-card__desc">Mark a spot in its &lt;style&gt; and let the command write the kit there. <code class="ex-code">--check</code> fails CI when it's out of date.</div></div>
+            <pre class="ex-pre">&lt;style&gt;
+/* excellent-kit:begin */
+/* excellent-kit:end */
+&lt;/style&gt;
+
+npx @excellent-so/kit sync viewer/index.html
+npx @excellent-so/kit sync viewer/index.html --check</pre>
+          </div>
+          <div class="ex-card ex-card--tight">
+            <div class="ex-card__header"><div class="ex-card__title">With Tailwind or a native app</div><div class="ex-card__desc"><code class="ex-code">tokens.json</code> has every value, light, dark and compact, to map into a theme.</div></div>
+            <pre class="ex-pre">import tokens from '@excellent-so/kit/tokens.json'
+// tokens.light['--color-strong']  → "#0E0E0E"
+// tokens.dark['--color-strong']   → "#F0F0F2"</pre>
+          </div>
+          <div class="ex-card ex-card--tight">
+            <div class="ex-card__header"><div class="ex-card__title">Theme and density</div><div class="ex-card__desc">One class and one attribute. This line in &lt;head&gt; restores a reader's dark choice before the first paint.</div></div>
+            <pre class="ex-pre">&lt;html class="theme-dark"&gt;           dark
+&lt;div data-density="compact"&gt;        36px controls
+
+&lt;script&gt;try{if(localStorage.getItem('ex-theme')
+==='dark')document.documentElement.classList
+.add('theme-dark')}catch(e){}&lt;/script&gt;</pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="sg-section" id="colour" aria-labelledby="h-colour">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-colour">Colour</h2><p class="ex-section-header__desc">Values shown for the theme you're looking at. Style with the names, never the hex, so both themes work.</p></div></div>
+        <div class="sg-grid" id="swatches"></div>
+      </section>
+
+      <section class="sg-section" id="type" aria-labelledby="h-type">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-type">Type</h2><p class="ex-section-header__desc">Geist for the interface and reading, Geist Mono for code and labels, Newsreader for a headline that makes a claim.</p></div></div>
+        <div class="sg-type">
+          <div><span class="sg-meta">Display · heading 40</span><span style="font-family:var(--font-heading);font-size:var(--text-display);line-height:1.08;letter-spacing:-0.02em;color:var(--color-strong)">Every task, checked</span></div>
+          <div><span class="sg-meta">Page title · 24/32 600</span><span class="ex-page-header__title">Verification runs</span></div>
+          <div><span class="sg-meta">Section · 16/24 600</span><span class="ex-section-header__title">Recent checks</span></div>
+          <div><span class="sg-meta">Reading · 16/24</span><span style="font-size:var(--text-base);line-height:1.5;color:var(--color-body)">Your agent says it's done. The check finds out, and shows you how it knows.</span></div>
+          <div><span class="sg-meta">App body · 14/20</span><span>A table cell, a field, a card's copy.</span></div>
+          <div><span class="sg-meta">Meta · 13/20</span><span style="font-size:var(--text-meta);color:var(--color-subtle)">Updated 4 minutes ago by the nightly run</span></div>
+          <div><span class="sg-meta">Small · 12/16</span><span style="font-size:var(--text-2xs);color:var(--color-subtle)">Badges, table heads, captions. The floor.</span></div>
+          <div><span class="sg-meta">Mono · 13</span><span style="font-family:var(--font-mono);font-size:var(--text-meta);color:var(--color-strong)">npx @excellent-so/screen-map</span></div>
+        </div>
+      </section>
+
+      <section class="sg-section" id="space" aria-labelledby="h-space">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-space">Space and corners</h2><p class="ex-section-header__desc">One unit of 8px; one line of body text is 24px. Inside a part, multiples of the unit; between blocks, the scale.</p></div></div>
+        <div class="sg-scale" id="scale"></div>
+        <div class="sg-corners" style="margin-top:24px">
+          <div style="border-radius:var(--radius-sm)">sm 4 · controls</div>
+          <div style="border-radius:var(--radius-md)">md 6 · panes</div>
+          <div style="border-radius:var(--radius-lg)">lg 8 · surfaces</div>
+          <div style="border-radius:var(--radius-xl)">xl 12 · frames</div>
+        </div>
+      </section>
+
+      <section class="sg-section" id="glyphs" aria-labelledby="h-glyphs">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-glyphs">Glyphs</h2><p class="ex-section-header__desc">Drawn on a 2px grid, as masks in the current colour. One arrow for every link that goes somewhere.</p></div></div>
+        <div class="sg-glyphs">
+          <span><i class="ex-glyph ex-glyph--arrow"></i>--glyph-arrow</span>
+          <span><i class="ex-glyph ex-glyph--back"></i>--glyph-arrow-back</span>
+          <span><i class="ex-glyph"></i>--glyph-check</span>
+          <span><i class="ex-glyph ex-glyph--cross"></i>--glyph-cross</span>
+          <span><i class="ex-glyph ex-glyph--open"></i>open square</span>
+        </div>
+        <p class="sg-note">Links: <a class="ex-link" href="#glyphs">An inline link</a> · <a class="ex-link ex-link--quiet" href="#glyphs">A quiet link</a> · <a class="ex-link ex-link--arrow" href="#glyphs">Read how a check works</a></p>
+      </section>
+
+      <section class="sg-section" id="marks" aria-labelledby="h-marks">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-marks">Marks</h2><p class="ex-section-header__desc">Each tool on the kit has its own mark, never Excellent's. Drawn on a 16-unit grid in the current colour: filled shapes and 2-unit lines, ink only, never amber. It sits left of the name at 16px (<code>.ex-mark</code>), and the same drawing is the favicon and the head of the README.</p></div></div>
+        <div class="sg-marks">
+          <figure class="sg-mark"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="6"/><circle cx="12" cy="4" r="3"/><rect x="1" y="10" width="14" height="5" rx="2.5"/></svg><figcaption><svg class="ex-mark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="6"/><circle cx="12" cy="4" r="3"/><rect x="1" y="10" width="14" height="5" rx="2.5"/></svg>kit</figcaption></figure>
+          <figure class="sg-mark"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="5"/><rect x="9" y="10" width="6" height="5"/><path d="M4 6v7h5" stroke="currentColor" stroke-width="2" fill="none"/></svg><figcaption><svg class="ex-mark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="5"/><rect x="9" y="10" width="6" height="5"/><path d="M4 6v7h5" stroke="currentColor" stroke-width="2" fill="none"/></svg>screen-map</figcaption></figure>
+          <figure class="sg-mark"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 1h12v14H2z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="5" y="4" width="6" height="2"/><rect x="5" y="7" width="6" height="2"/><rect x="5" y="10" width="2" height="3"/></svg><figcaption><svg class="ex-mark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 1h12v14H2z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="5" y="4" width="6" height="2"/><rect x="5" y="7" width="6" height="2"/><rect x="5" y="10" width="2" height="3"/></svg>selfdocs</figcaption></figure>
+          <figure class="sg-mark"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="2" width="14" height="4"/><rect x="1" y="8" width="6" height="2"/><rect x="9" y="8" width="6" height="2"/><rect x="1" y="12" width="6" height="2"/><rect x="9" y="12" width="6" height="2"/></svg><figcaption><svg class="ex-mark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="2" width="14" height="4"/><rect x="1" y="8" width="6" height="2"/><rect x="9" y="8" width="6" height="2"/><rect x="1" y="12" width="6" height="2"/><rect x="9" y="12" width="6" height="2"/></svg>pressroom</figcaption></figure>
+          <figure class="sg-mark"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 14.5 2.4 8.9A3.4 3.4 0 0 1 8 4.2a3.4 3.4 0 0 1 5.6 4.7Z"/></svg><figcaption><svg class="ex-mark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 14.5 2.4 8.9A3.4 3.4 0 0 1 8 4.2a3.4 3.4 0 0 1 5.6 4.7Z"/></svg>x-likes</figcaption></figure>
+          <figure class="sg-mark"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="4" width="14" height="8" stroke="currentColor" stroke-width="2" fill="none"/><rect x="3" y="6" width="7" height="4"/></svg><figcaption><svg class="ex-mark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="4" width="14" height="8" stroke="currentColor" stroke-width="2" fill="none"/><rect x="3" y="6" width="7" height="4"/></svg>usage-cache</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="sg-section" id="buttons" aria-labelledby="h-buttons">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-buttons">Buttons</h2><p class="ex-section-header__desc">One solid button per view, for the thing you came to do. The rest are outlines or ghosts.</p></div></div>
+        <div class="sg-row">
+          <button class="ex-btn" type="button">Run the check</button>
+          <button class="ex-btn ex-btn--outline" type="button">Open the receipt</button>
+          <button class="ex-btn ex-btn--muted" type="button">Selected</button>
+          <button class="ex-btn ex-btn--ghost" type="button">Cancel</button>
+          <button class="ex-btn ex-btn--danger" type="button">Delete the run</button>
+          <button class="ex-btn ex-btn--link" type="button">Show more rows</button>
+        </div>
+        <div class="sg-row">
+          <button class="ex-btn ex-btn--lg" type="button">Install <span class="ex-glyph ex-glyph--arrow" aria-hidden="true"></span></button>
+          <button class="ex-btn ex-btn--sm" type="button">Small</button>
+          <button class="ex-btn ex-btn--outline ex-btn--sm" type="button">Small outline</button>
+          <button class="ex-btn ex-btn--outline ex-btn--xs" type="button">Extra small</button>
+          <button class="ex-btn ex-btn--outline ex-btn--icon" type="button" aria-label="Copy">⧉</button>
+          <button class="ex-btn" type="button" disabled>Disabled</button>
+        </div>
+      </section>
+
+      <section class="sg-section" id="badges" aria-labelledby="h-badges">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-badges">Badges and states</h2><p class="ex-section-header__desc">Amber and red are verdicts. Everything else is ink: done is an outline with a check, not yet is an open square.</p></div></div>
+        <div class="sg-row">
+          <span class="ex-badge ex-badge--verified">Verified</span>
+          <span class="ex-badge ex-badge--returned">Returned</span>
+          <span class="ex-badge ex-badge--unchecked">Unchecked</span>
+          <span class="ex-badge ex-badge--danger">Failed</span>
+          <span class="ex-badge ex-badge--success">Done</span>
+          <span class="ex-badge ex-badge--warning">Pending</span>
+          <span class="ex-badge ex-badge--info">In progress</span>
+          <span class="ex-badge ex-badge--neutral">Archived</span>
+          <span class="ex-badge">Default</span>
+          <span class="ex-badge ex-badge--count">12</span>
+          <span class="ex-badge ex-badge--caps">Receipt</span>
+          <span class="ex-tag">New</span>
+        </div>
+        <div class="ex-table-frame" style="margin-top:20px">
+          <div class="ex-table-scroll">
+            <table class="ex-table">
+              <thead><tr><th>Tone</th><th>Looks like</th><th>For</th></tr></thead>
+              <tbody>
+                <tr><td class="ex-cell-title">verified</td><td><span class="ex-badge ex-badge--verified">Verified</span></td><td>A verdict: the work was checked and holds</td></tr>
+                <tr><td class="ex-cell-title">returned</td><td><span class="ex-badge ex-badge--returned">Returned</span></td><td>A verdict: the work was sent back</td></tr>
+                <tr><td class="ex-cell-title">danger</td><td><span class="ex-badge ex-badge--danger">Failed</span></td><td>Broken, or money at risk: failed, overdue, blocked</td></tr>
+                <tr><td class="ex-cell-title">success</td><td><span class="ex-badge ex-badge--success">Paid</span></td><td>Done and healthy: paid, signed, active, ready</td></tr>
+                <tr><td class="ex-cell-title">warning</td><td><span class="ex-badge ex-badge--warning">Queued</span></td><td>Not done yet: pending, queued, draft, open</td></tr>
+                <tr><td class="ex-cell-title">info</td><td><span class="ex-badge ex-badge--info">Submitted</span></td><td>In flight, informational</td></tr>
+                <tr><td class="ex-cell-title">neutral</td><td><span class="ex-badge ex-badge--neutral">Archived</span></td><td>Anything else</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="sg-section" id="forms" aria-labelledby="h-forms">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-forms">Forms</h2><p class="ex-section-header__desc">A label over every field, a hint under it when it helps, and the error in place of the hint.</p></div></div>
+        <form class="sg-grid sg-grid--2" onsubmit="return false">
+          <div class="ex-field"><label class="ex-label" for="f1">Repository</label><input class="ex-input" id="f1" placeholder="github.com/you/app"><p class="ex-hint">The app the check runs against.</p></div>
+          <div class="ex-field"><label class="ex-label" for="f2">Branch <span class="ex-optional">(optional)</span></label><input class="ex-input" id="f2" value="main"></div>
+          <div class="ex-field"><label class="ex-label" for="f3">Agent</label><select class="ex-select" id="f3"><option>Claude Code</option><option>Codex</option><option>Gemini</option></select></div>
+          <div class="ex-field"><label class="ex-label" for="f4">Email</label><input class="ex-input" id="f4" value="not-an-email" aria-invalid="true" aria-describedby="f4e"><p class="ex-error" id="f4e">That doesn't look like an email address.</p></div>
+          <div class="ex-field" style="grid-column:1/-1"><label class="ex-label" for="f5">What should it check?</label><textarea class="ex-textarea" id="f5">The sign-in page loads, and a wrong password shows an error.</textarea></div>
+          <label class="ex-check"><input type="checkbox" checked><span>Email me the receipt<br><span class="ex-hint">One email per run, with the evidence attached.</span></span></label>
+          <div class="ex-toolbar" style="justify-content:flex-end"><button class="ex-btn ex-btn--ghost" type="button">Cancel</button><button class="ex-btn" type="submit">Start the run</button></div>
+        </form>
+      </section>
+
+      <section class="sg-section" id="surfaces" aria-labelledby="h-surfaces">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-surfaces">Cards and alerts</h2><p class="ex-section-header__desc">The one surface: a hairline and 8px corners, flat on the page.</p></div></div>
+        <div class="sg-grid sg-grid--2">
+          <div class="ex-card">
+            <div class="ex-card__header"><div class="ex-card__title">Sign-in flow</div><div class="ex-card__desc">Checked 4 minutes ago against main</div><div class="ex-card__action"><span class="ex-badge ex-badge--verified">Verified</span></div></div>
+            <div>3 of 3 checks held. The receipt has a screenshot of every step and the network log.</div>
+            <div class="ex-card__footer"><button class="ex-btn ex-btn--outline ex-btn--sm" type="button">Open the receipt</button></div>
+          </div>
+          <div class="sg-stack">
+            <div class="ex-alert"><i class="ex-glyph" aria-hidden="true"></i><div class="ex-alert__title">The run finished</div><div class="ex-alert__desc">Every check held. The receipt is ready to share.</div></div>
+            <div class="ex-alert ex-alert--danger" role="alert"><i class="ex-glyph ex-glyph--cross" aria-hidden="true"></i><div class="ex-alert__title">Two checks failed</div><div class="ex-alert__desc">The password reset email never arrived.</div></div>
+            <div class="ex-float" style="padding:16px">A floating surface, for a menu or a popover: the only place a shadow goes.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sg-section" id="tables" aria-labelledby="h-tables">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-tables">Tables <span class="ex-badge ex-badge--count">5</span></h2><p class="ex-section-header__desc">Click a heading to sort. The first cell is a title with one muted line; numbers sit right in tabular figures.</p></div><div class="ex-search"><input class="ex-input ex-btn--sm" style="height:var(--control-h-sm)" placeholder="Filter runs" aria-label="Filter runs"></div></div>
+        <div class="ex-table-frame">
+          <div class="ex-table-scroll">
+            <table class="ex-table" data-ex-sort>
+              <thead><tr><th>Run</th><th>Status</th><th class="ex-num">Checks</th><th class="ex-num">Time</th><th>Agent</th></tr></thead>
+              <tbody>
+                <tr><td><div class="ex-cell-title">Sign-in flow</div><div class="ex-cell-clamp">Wrong password shows an error, right one lands on the dashboard</div></td><td><span class="ex-badge ex-badge--verified">Verified</span></td><td class="ex-num">3</td><td class="ex-num" data-sort="42">0:42</td><td>Claude Code</td></tr>
+                <tr><td><div class="ex-cell-title">Password reset</div><div class="ex-cell-clamp">The email arrives and the link works once</div></td><td><span class="ex-badge ex-badge--returned">Returned</span></td><td class="ex-num">4</td><td class="ex-num" data-sort="95">1:35</td><td>Codex</td></tr>
+                <tr><td><div class="ex-cell-title">Invoice export</div><div class="ex-cell-clamp">CSV totals match the dashboard to the cent</div></td><td><span class="ex-badge ex-badge--warning">Queued</span></td><td class="ex-num">6</td><td class="ex-num ex-cell-empty" data-sort="0">None yet</td><td>Claude Code</td></tr>
+                <tr><td><div class="ex-cell-title">Onboarding</div><div class="ex-cell-clamp">A new account can invite a teammate</div></td><td><span class="ex-badge ex-badge--danger">Failed</span></td><td class="ex-num">5</td><td class="ex-num" data-sort="128">2:08</td><td>Gemini</td></tr>
+                <tr><td><div class="ex-cell-title">Settings</div><div class="ex-cell-clamp">Changing the timezone moves every date on the page</div></td><td><span class="ex-badge ex-badge--success">Done</span></td><td class="ex-num">2</td><td class="ex-num" data-sort="18">0:18</td><td>Claude Code</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="sg-section" id="numbers" aria-labelledby="h-numbers">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-numbers">Numbers and facts</h2><p class="ex-section-header__desc">Metrics at a glance, and the facts about one thing as label and value rows.</p></div></div>
+        <div class="ex-metrics">
+          <div class="ex-metric"><div class="ex-metric__label">Runs this week</div><div class="ex-metric__value">128</div><div class="ex-metric__detail">31 more than last week</div></div>
+          <div class="ex-metric"><div class="ex-metric__label">Verified</div><div class="ex-metric__value">112</div><div class="ex-metric__detail">88% of runs</div></div>
+          <div class="ex-metric"><div class="ex-metric__label">Returned</div><div class="ex-metric__value">16</div><div class="ex-metric__detail">Most often: password reset</div></div>
+          <div class="ex-metric"><div class="ex-metric__label">Median time</div><div class="ex-metric__value">0:47</div><div class="ex-metric__detail">Per run</div></div>
+        </div>
+        <dl class="ex-details" style="margin-top:16px">
+          <div><dt>Run</dt><dd><span class="ex-id">run_8f2c1a</span></dd></div>
+          <div><dt>Repository</dt><dd>github.com/acme/web</dd></div>
+          <div><dt>Started</dt><dd>Nov 5, 2026 at 9:41 AM</dd></div>
+          <div><dt>Verdict</dt><dd><span class="ex-badge ex-badge--verified">Verified</span></dd></div>
+        </dl>
+        <p class="sg-note">The numbers on this page are examples.</p>
+      </section>
+
+      <section class="sg-section" id="heads" aria-labelledby="h-heads">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-heads">Heads and tabs</h2><p class="ex-section-header__desc">A page title with its actions, a section title with a count, and tabs underlined in ink.</p></div></div>
+        <div class="ex-card ex-card--tight">
+          <div class="ex-page-header"><div><h3 class="ex-page-header__title">Runs</h3><p class="ex-page-header__desc">Every check your agents asked for, newest first.</p></div><div class="ex-page-header__actions"><button class="ex-btn ex-btn--outline ex-btn--sm" type="button">Export</button><button class="ex-btn ex-btn--sm" type="button">New run</button></div></div>
+          <div class="ex-tabs-scroll"><div class="ex-tabs" role="tablist"><button class="ex-tab" role="tab" aria-selected="true">All <span class="ex-badge ex-badge--count">128</span></button><button class="ex-tab" role="tab" aria-selected="false">Verified</button><button class="ex-tab" role="tab" aria-selected="false">Returned</button><button class="ex-tab" role="tab" aria-selected="false">Queued</button></div></div>
+        </div>
+      </section>
+
+      <section class="sg-section" id="empty" aria-labelledby="h-empty">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-empty">Empty and loading</h2><p class="ex-section-header__desc">Say what's missing and what to do about it. A whole empty page gets the headline face.</p></div></div>
+        <div class="sg-grid sg-grid--2">
+          <div class="ex-empty"><p class="ex-empty__title">No runs yet</p><p class="ex-empty__text">Ask your agent to check its work, and the first run shows up here.</p><div class="ex-empty__actions"><button class="ex-btn ex-btn--outline ex-btn--sm" type="button">Read the guide</button></div></div>
+          <div class="ex-card ex-card--tight"><div class="sg-stack" style="padding-block:4px"><div class="ex-skeleton" style="height:16px;width:40%"></div><div class="ex-skeleton" style="height:12px;width:90%"></div><div class="ex-skeleton" style="height:12px;width:75%"></div><div class="ex-skeleton" style="height:32px;width:30%"></div></div></div>
+        </div>
+        <div class="ex-empty ex-empty--page" style="margin-top:24px"><p class="ex-empty__title">Nothing to check yet</p><p class="ex-empty__text">Connect a repository and the first run starts on its own.</p><div class="ex-empty__actions"><button class="ex-btn" type="button">Connect a repository</button><a class="ex-link ex-link--arrow" href="#use">How it works</a></div></div>
+      </section>
+
+      <section class="sg-section" id="choosing" aria-labelledby="h-choosing">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-choosing">Choosing</h2><p class="ex-section-header__desc">A switch between a few views, a list you pick one thing from, chips for what's picked, and a search field.</p></div></div>
+        <div class="sg-grid sg-grid--2">
+          <div class="sg-stack">
+            <div class="ex-segmented" role="group" aria-label="View"><button type="button" aria-pressed="true">Split</button><button type="button" aria-pressed="false">Edit</button><button type="button" aria-pressed="false">Preview</button><button type="button" aria-pressed="false">Raw</button></div>
+            <div class="ex-toolbar"><button class="ex-btn ex-btn--outline ex-btn--sm" type="button" aria-pressed="true">Images</button><button class="ex-btn ex-btn--outline ex-btn--sm" type="button" aria-pressed="false">Links</button><button class="ex-btn ex-btn--outline ex-btn--sm is-copied" type="button">Copied</button></div>
+            <div class="ex-search-field"><input class="ex-input" type="search" value="sign-in" aria-label="Search runs"><button type="button" aria-label="Clear the search"></button></div>
+            <div class="ex-toolbar"><span class="ex-chip">Verified<button type="button" aria-label="Remove Verified"></button></span><span class="ex-chip">Claude Code<button type="button" aria-label="Remove Claude Code"></button></span><span class="ex-chip">This week</span></div>
+            <p>A match in text: the <span class="ex-hl">sign-in</span> page loads. <span class="ex-avatar">MW</span> <span class="ex-avatar ex-avatar--sm">A</span></p>
+          </div>
+          <div class="ex-table-frame">
+            <ul class="ex-list" role="listbox" aria-label="Posts">
+              <li><button class="ex-row" role="option" aria-selected="false"><span class="ex-cell-title">Notes on writing in plain markdown</span><span class="ex-cell-meta"><span class="ex-badge ex-badge--warning">Draft</span> Created Nov 3</span></button></li>
+              <li><button class="ex-row" role="option" aria-selected="true"><span class="ex-cell-title">Moving the site to Astro</span><span class="ex-cell-meta"><span class="ex-badge ex-badge--info">Ready</span> Created Oct 28</span></button></li>
+              <li><button class="ex-row" role="option" aria-selected="false"><span class="ex-cell-title">A static blog without a CMS</span><span class="ex-cell-meta"><span class="ex-badge ex-badge--success">Published</span> Oct 12</span></button></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="sg-section" id="floating" aria-labelledby="h-floating">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-floating">Menus, dialogs, toasts</h2><p class="ex-section-header__desc">The only parts with shadows, because they float over the page. A dialog and a side sheet sit over a scrim.</p></div></div>
+        <div class="sg-grid sg-grid--2">
+          <div class="ex-menu" role="menu" aria-label="Sort">
+            <p class="ex-menu__label">Sort by</p>
+            <button class="ex-menu__item" role="menuitemradio" aria-checked="true">Newest first</button>
+            <button class="ex-menu__item" role="menuitemradio" aria-checked="false">Oldest first <kbd>⌥O</kbd></button>
+            <div class="ex-menu__sep" role="separator"></div>
+            <button class="ex-menu__item ex-menu__item--danger" role="menuitem">Delete every draft</button>
+          </div>
+          <div class="sg-stack">
+            <div class="ex-toolbar"><button class="ex-btn ex-btn--outline" type="button" id="open-dialog">Open a dialog</button><button class="ex-btn ex-btn--outline" type="button" id="show-toast">Show a toast</button></div>
+            <div class="ex-toast" role="status" style="animation:none">Saved. The receipt is ready.</div>
+            <div class="ex-toast ex-toast--danger" role="status" style="animation:none">The push failed. Nothing was published.</div>
+          </div>
+        </div>
+        <dialog class="ex-dialog" id="demo-dialog" aria-labelledby="dlg-t">
+          <form method="dialog">
+            <div class="ex-dialog__head"><h3 class="ex-dialog__title" id="dlg-t">Publish this post?</h3><p class="ex-dialog__desc">It goes out as one commit with only this post's file.</p></div>
+            <div class="ex-dialog__body"><div class="ex-field"><label class="ex-label" for="dlg-m">Commit message</label><input class="ex-input" id="dlg-m" value="Publish: Moving the site to Astro"></div></div>
+            <div class="ex-dialog__foot"><button class="ex-btn ex-btn--ghost" value="cancel">Cancel</button><button class="ex-btn" value="ok">Publish</button></div>
+          </form>
+        </dialog>
+        <div class="ex-toasts" id="toasts" aria-live="polite"></div>
+      </section>
+
+      <section class="sg-section" id="reading" aria-labelledby="h-reading">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-reading">Reading</h2><p class="ex-section-header__desc">Rendered markdown: a doc, a post preview, a saved article.</p></div></div>
+        <div class="ex-card"><div class="ex-prose">
+          <h2>What changed</h2>
+          <p>Content stays in <code>content/posts</code>, so nothing about publishing moved. Images now go through the build, with sizes set in <strong>one place</strong>. <a href="#reading">The old links</a> keep working through three redirects.</p>
+          <ul><li>Headings, lists, links and code</li><li>Tables and quotes</li></ul>
+          <blockquote>Checklists say what to do. They rarely say how anyone will know it was done.</blockquote>
+          <pre>export default { markdown: { shikiConfig: { theme: "github-light" } } }</pre>
+        </div></div>
+      </section>
+
+      <section class="sg-section" id="code" aria-labelledby="h-code">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-code">Code and commands</h2><p class="ex-section-header__desc">The install command is one line you can copy; Copied turns amber for a moment.</p></div></div>
+        <div class="sg-stack">
+          <span class="ex-cmd"><code>npx @excellent-so/screen-map</code><button type="button" data-ex-copy="npx @excellent-so/screen-map">Copy</button></span>
+          <p>Inline code like <code class="ex-code">--check</code>, and keys like <kbd class="ex-kbd">⌘</kbd> <kbd class="ex-kbd">B</kbd> to fold the sidebar.</p>
+          <pre class="ex-pre">$ npx @excellent-so/kit sync viewer/index.html
+synced  viewer/index.html</pre>
+        </div>
+      </section>
+
+      <section class="sg-section" id="dither" aria-labelledby="h-dither">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-dither">The dither</h2><p class="ex-section-header__desc">Excellent's amber texture: dots on the page's grid, as a band or a fill. Decoration only, never behind words.</p></div></div>
+        <div class="sg-grid sg-grid--2">
+          <div class="ex-dither" style="height:96px;border-radius:var(--radius-lg)" aria-hidden="true"></div>
+          <div class="ex-dither ex-dither--dense" style="height:96px;border-radius:var(--radius-lg)" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="sg-section" id="shell-demo" aria-labelledby="h-shell">
+        <div class="ex-section-header"><div><h2 class="ex-section-header__title" id="h-shell">The app shell</h2><p class="ex-section-header__desc">This page is one. A 240px sidebar, a 48px top bar that sticks, content on fixed gutters up to 1440px. On a phone the sidebar folds behind the menu button.</p></div></div>
+        <div class="sg-demo-shell" aria-hidden="true">
+          <div class="ex-shell" data-density="compact">
+            <aside class="ex-sidebar"><span class="ex-sidebar__brand"><svg class="ex-mark" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="5"/><rect x="9" y="10" width="6" height="5"/><path d="M4 6v7h5" stroke="currentColor" stroke-width="2" fill="none"/></svg>Your tool</span><div class="ex-sidebar__body"><p class="ex-nav-label">Workspace</p><ul class="ex-nav"><li><a aria-current="page">Runs <span class="ex-badge ex-badge--count">128</span></a></li><li><a>Receipts</a></li><li><a>Settings</a></li></ul></div></aside>
+            <div><div class="ex-topbar"><ol class="ex-crumbs"><li>Runs</li><li aria-current="page">Sign-in flow</li></ol><div class="ex-topbar__end"><button class="ex-btn ex-btn--sm" tabindex="-1">New run</button></div></div>
+              <div class="ex-main"><div class="ex-metrics"><div class="ex-metric"><div class="ex-metric__label">Checks</div><div class="ex-metric__value">3</div></div><div class="ex-metric"><div class="ex-metric__label">Held</div><div class="ex-metric__value">3</div></div><div class="ex-metric"><div class="ex-metric__label">Time</div><div class="ex-metric__value">0:42</div></div></div>
+              <dl class="ex-details"><div><dt>Verdict</dt><dd><span class="ex-badge ex-badge--verified">Verified</span></dd></div><div><dt>Agent</dt><dd>Claude Code</dd></div></dl></div></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="sg-foot">
+        <p class="ex-made"><span>@excellent-so/kit 0.2.1</span><span>MIT. Fonts: Geist and Geist Mono, SIL Open Font License.</span><span>The Excellent name and logo aren't part of the kit.</span><a href="https://excellent.so">excellent.so</a></p>
+      </footer>
+    </main>
+  </div>
+</div>
+<script src="../kit.js" defer></script>
+<script>
+// Styleguide only: the swatches read the live tokens, the spacing scale draws itself, density and the
+// crumb follow along.
+(function () {
+  var COLOURS = [
+    ['--color-background', 'The page'], ['--color-card', 'Cards, fields, menus'], ['--color-muted', 'Chips, panes, hover'],
+    ['--color-border', 'Hairlines'], ['--color-border-strong', 'Outline buttons and badges'], ['--color-field', 'Field edges'],
+    ['--color-strong', 'Titles, primary text'], ['--color-body', 'Body text'], ['--color-subtle', 'Secondary text'], ['--color-faint', 'Labels, placeholders'],
+    ['--color-primary', 'The solid button'], ['--color-verified', 'Verified, and nothing else'], ['--color-returned', 'Returned or failed, and nothing else'], ['--color-returned-ink', 'Red text on the page']
+  ];
+  function swatches() {
+    var cs = getComputedStyle(document.documentElement);
+    document.getElementById('swatches').innerHTML = COLOURS.map(function (c) {
+      return '<div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(' + c[0] + ')"></div><div class="sg-swatch__text"><span class="sg-swatch__name">' + c[0] + '</span><span class="sg-swatch__value">' + cs.getPropertyValue(c[0]).trim() + '</span><span class="sg-swatch__use">' + c[1] + '</span></div></div>';
+    }).join('');
+  }
+  var SCALE = [['--s1', 8, 'A label and its line'], ['--s2', 16, 'A title and its meta'], ['--s3', 24, 'A heading and its text'], ['--s4', 32, 'Text and its action'], ['--s5', 48, 'A section head and its content'], ['--s6', 72, 'Two large blocks']];
+  document.getElementById('scale').innerHTML = SCALE.map(function (s) { return '<div><span class="sg-meta" style="font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-subtle)">' + s[0] + ' · ' + s[1] + 'px</span><span style="display:flex;align-items:center;gap:12px"><i style="width:' + s[1] + 'px"></i><span style="color:var(--color-subtle);font-size:var(--text-meta)">' + s[2] + '</span></span></div>'; }).join('');
+  swatches();
+  new MutationObserver(swatches).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+  var shell = document.getElementById('shell');
+  document.querySelectorAll('[data-sg-density]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (b.dataset.sgDensity === 'compact') shell.setAttribute('data-density', 'compact'); else shell.removeAttribute('data-density');
+      document.querySelectorAll('[data-sg-density]').forEach(function (x) { var on = x === b; x.setAttribute('aria-pressed', String(on)); x.classList.toggle('ex-btn--muted', on); x.classList.toggle('ex-btn--ghost', !on); });
+    });
+  });
+  var links = Array.prototype.slice.call(document.querySelectorAll('.ex-sidebar .ex-nav a'));
+  var crumb = document.getElementById('crumb');
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var a = links.find(function (l) { return l.getAttribute('href') === '#' + e.target.id; });
+      if (!a) return;
+      links.forEach(function (l) { l.removeAttribute('aria-current'); });
+      a.setAttribute('aria-current', 'page'); crumb.textContent = a.textContent;
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('#top, .sg-section').forEach(function (s) { io.observe(s); });
+  document.querySelectorAll('.ex-sidebar .ex-nav a').forEach(function (a) { a.addEventListener('click', function () { shell.removeAttribute('data-nav-open'); }); });
+  var dlg = document.getElementById('demo-dialog');
+  document.getElementById('open-dialog').addEventListener('click', function () { dlg.showModal(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  document.getElementById('show-toast').addEventListener('click', function () {
+    var t = document.createElement('div'); t.className = 'ex-toast'; t.setAttribute('role', 'status'); t.textContent = 'Copied the install line';
+    document.getElementById('toasts').appendChild(t); setTimeout(function () { t.remove(); }, 2400);
+  });
+  document.querySelectorAll('.ex-segmented button').forEach(function (b) { b.addEventListener('click', function () { b.parentNode.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); }); });
+  document.querySelectorAll('.ex-list .ex-row').forEach(function (r) { r.addEventListener('click', function () { r.closest('.ex-list').querySelectorAll('.ex-row').forEach(function (x) { x.setAttribute('aria-selected', String(x === r)); }); }); });
+  document.querySelectorAll('[role="tab"]').forEach(function (t) { t.addEventListener('click', function () { t.parentNode.querySelectorAll('[role="tab"]').forEach(function (x) { x.setAttribute('aria-selected', String(x === t)); }); }); });
+})();
+</script>
+</body>
+</html>

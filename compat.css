@@ -1,0 +1,71 @@
+/* @excellent-so/kit: compat.
+   The token names the tools' viewers have used since July 2026 (screen-map's styleguide "Layer A", vendored
+   into selfdocs, pressroom, usertrial and showroom), mapped onto the kit. With tokens.css and this file in
+   place of a viewer's old :root block, the viewer takes the new look without renaming a class. New code uses
+   the kit's own names; this file goes once nothing reads the old ones.
+
+   The old intent palette (indigo, emerald, amber, violet) folds into ink and outlines, because the kit has two
+   colours with meaning: amber for Verified, red for Returned or failed. "danger" maps to red; info, success,
+   warning and violet map to ink and greys. */
+
+:root,
+.theme-light, [data-theme="light"],
+.theme-dark, .dark, [data-theme="dark"] {
+  --corner-unit: 4px;
+  --radius-xs: var(--radius-sm);
+
+  --surface-1: var(--color-background);
+  --surface-2: var(--color-muted);
+  --surface-3: var(--color-card);
+  --surface-4: var(--color-card);
+  --shadow-1: var(--shadow-surface-1);
+  --shadow-2: var(--shadow-surface-2);
+  --shadow-3: var(--shadow-surface-3);
+  --shadow-4: var(--shadow-surface-4);
+  --shadow-6: var(--shadow-surface-5);
+
+  --text-strong: var(--color-strong);
+  --text-default: var(--color-body);
+  --text-subtle: var(--color-subtle);
+  --bg-selected: var(--color-muted);
+  --border: var(--color-border);
+  --line-strong: var(--color-border-strong);
+  --nav-active-ring: var(--shadow-ring);
+
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --ring: var(--color-ring);
+  --destructive: var(--color-returned);
+  --reject-fg: var(--color-returned-ink);
+
+  --info: var(--color-strong);    --info-fg: var(--color-strong);    --info-bg: var(--color-muted);    --info-border: var(--color-border-strong);
+  --success: var(--color-strong); --success-fg: var(--color-strong); --success-bg: var(--color-muted); --success-border: var(--color-border-strong);
+  --warning: var(--color-body);   --warning-fg: var(--color-body);   --warning-bg: var(--color-muted); --warning-border: var(--color-border-strong);
+  --danger: var(--color-returned); --danger-fg: var(--color-returned-ink); --danger-bg: color-mix(in srgb, var(--color-returned) 10%, transparent); --danger-border: color-mix(in srgb, var(--color-returned) 35%, transparent);
+  --violet: var(--color-subtle);  --violet-fg: var(--color-body);    --violet-bg: var(--color-muted);  --violet-border: var(--color-border-strong);
+  --verified: var(--color-verified); --verified-fg: var(--color-on-verified);
+
+  --chart-1: var(--color-strong);
+  --chart-2: var(--color-verified);
+  --chart-3: var(--color-subtle);
+  --chart-4: var(--color-border-strong);
+  --chart-5: var(--color-returned);
+
+  /* The viewers' short names */
+  --bg: var(--color-background);
+  --panel: var(--color-muted);
+  --panel2: var(--color-card);
+  --line: var(--color-border);
+  --line2: var(--color-border-strong);
+  --ink: var(--color-strong);
+  --mut: var(--color-body);
+  --mut2: var(--color-subtle);
+  --acc: var(--color-primary);
+  --acc2: var(--color-subtle);
+  --ok: var(--color-strong);
+  --warn: var(--color-body);
+  --bad: var(--color-returned);
+  --new: var(--color-strong);
+  --praise: var(--color-strong);
+  --r: var(--radius-lg);
+}

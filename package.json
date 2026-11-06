@@ -1,0 +1,28 @@
+{
+  "name": "@excellent-so/kit",
+  "version": "0.2.1",
+  "description": "Excellent's design kit for plain HTML and any framework: tokens as CSS variables, a few dozen components as plain classes, light and dark, comfortable and compact. No dependencies.",
+  "license": "MIT",
+  "type": "module",
+  "files": ["tokens.css", "compat.css", "kit.css", "fonts.css", "fonts/", "kit.js", "tokens.json", "lib/", "bin/", "styleguide/"],
+  "exports": {
+    "./tokens.css": "./tokens.css",
+    "./compat.css": "./compat.css",
+    "./kit.css": "./kit.css",
+    "./fonts.css": "./fonts.css",
+    "./kit.js": "./kit.js",
+    "./tokens.json": "./tokens.json",
+    "./sync": "./lib/sync.mjs"
+  },
+  "bin": { "excellent-kit": "./bin/excellent-kit.mjs" },
+  "scripts": {
+    "tokens": "node scripts/tokens-json.mjs",
+    "test": "node --test test/*.test.mjs",
+    "styleguide": "node scripts/serve.mjs"
+  },
+  "keywords": ["design-system", "css", "tokens", "styleguide", "excellent"],
+  "homepage": "https://github.com/excellent-so/kit#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/excellent-so/kit.git" },
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=20" }
+}

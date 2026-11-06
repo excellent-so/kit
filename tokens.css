@@ -1,0 +1,145 @@
+/* @excellent-so/kit: tokens.
+   Ink on white, amber for Verified only, proof red for Returned (and failed) only, zinc greys for everything
+   else, 4px corners on controls and 8px on surfaces. Light by default whatever the OS says; dark is opt-in
+   with `.theme-dark` (or `.dark`, or `data-theme="dark"`) on <html> or on any subtree. Density is one
+   attribute: `data-density="compact"`.
+
+   Names are `--color-*` and the like, so the same token means the same thing everywhere.
+   tokens.json is generated from this file (npm run tokens); the tests keep them in step. */
+
+:root,
+.theme-light,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Faces. Geist and Geist Mono ship with the kit (fonts.css, OFL); Newsreader is optional (OFL, Google
+     Fonts) and falls back to Georgia. Everything falls back to the system. */
+  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Type, in rem so it follows the reader's font size. 12px is the floor. */
+  --text-2xs: 0.75rem;     /* 12: badges, table heads, captions */
+  --text-meta: 0.8125rem;  /* 13: meta lines, helper text */
+  --text-sm: 0.875rem;     /* 14: the app's body and table cells */
+  --text-ui: 0.9375rem;    /* 15: card copy, UI body outside the shell */
+  --text-base: 1rem;       /* 16: reading text */
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;      /* 24: a page title */
+  --text-display: 2.5rem;  /* 40: an empty page's headline (Newsreader) */
+
+  /* Space. One unit u = 8px; one line of body text b = 24px. Inside a component, multiples of u; between
+     blocks, the scale. */
+  --u: 0.5rem;
+  --s1: 0.5rem;   /* a label and its line */
+  --s2: 1rem;     /* a title and its meta */
+  --s3: 1.5rem;   /* a heading and its text; paragraphs */
+  --s4: 2rem;     /* text and the action under it */
+  --s5: 3rem;     /* a section's header and its content */
+  --s6: 4.5rem;   /* two large blocks */
+
+  /* Corners: controls and badges 4, inner panes 6, surfaces 8, rare large frames 12. */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Control heights. 44px everywhere by default (touch targets); compact density below. */
+  --control-h: 2.75rem;
+  --control-h-sm: 2.5rem;
+  --control-h-xs: 2.25rem;
+
+  /* Surfaces */
+  --color-background: #FBFBFB;
+  --color-foreground: #0E0E0E;
+  --color-card: #FFFFFF;
+  --color-muted: #F4F4F5;
+  --color-border: #E4E4E7;
+  --color-border-strong: #D4D4D8;
+  --color-field: #8A8A93;       /* form-field edges only: at least 3:1 on the page */
+  --color-input: #FFFFFF;       /* a field's background */
+  --color-ring: #0E0E0E;        /* the focus ring */
+
+  /* Text, ink then zinc */
+  --color-strong: #0E0E0E;
+  --color-body: #3F3F46;
+  --color-subtle: #63636E;
+  --color-faint: #71717B;
+  --color-icon-faint: #9D9D9D;  /* decorative icons only, never text */
+
+  /* Action */
+  --color-primary: #0E0E0E;
+  --color-primary-foreground: #FFFFFF;
+  --color-primary-hover: #2B2B2B;
+  --color-selection: #EBEBEB;
+
+  /* The two marks. Amber is for Verified (and the dither, a tag, a Copied state) and nothing else; proof red
+     is for Returned and failed and nothing else. Text on amber is ink; text on red is white, in both themes. */
+  --color-verified: #FFBF00;
+  --color-on-verified: #0E0E0E;
+  --color-returned: #CE2E1C;
+  --color-on-returned: #FFFFFF;
+  --color-returned-ink: #B42318; /* red text on the page (a failed line), 4.5:1 or better */
+
+  /* Elevation is for things that float (menus, popovers, a floating frame), never for static cards. */
+  --shadow-ring: rgb(0 0 0 / 0.06);
+  --shadow-color: rgb(0 0 0 / 0.06);
+  --shadow-surface-1: 0 0 0 1px var(--shadow-ring);
+  --shadow-surface-2: 0 0 0 1px var(--shadow-ring), 0 1px 1px -0.5px var(--shadow-color);
+  --shadow-surface-3: 0 0 0 1px var(--shadow-ring), 0 1px 1px -0.5px var(--shadow-color), 0 3px 3px -1.5px var(--shadow-color);
+  --shadow-surface-4: 0 0 0 1px var(--shadow-ring), 0 1px 1px -0.5px var(--shadow-color), 0 3px 3px -1.5px var(--shadow-color), 0 6px 6px -3px var(--shadow-color);
+  --shadow-surface-5: 0 0 0 1px var(--shadow-ring), 0 1px 1px -0.5px var(--shadow-color), 0 3px 3px -1.5px var(--shadow-color), 0 6px 6px -3px var(--shadow-color), 0 12px 12px -6px var(--shadow-color);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+
+  /* Glyphs, drawn on a 2px grid, as masks in currentColor: the one arrow, the way back, a stepped check, a
+     cross. Use them with `mask: var(--glyph-check) center / contain no-repeat; background: currentColor`. */
+  --glyph-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'%3E%3Cpath d='M0 4h13v2H0zM7 0h2v2H7zM9 2h2v2H9zM9 6h2v2H9zM7 8h2v2H7z'/%3E%3C/svg%3E");
+  --glyph-arrow-back: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'%3E%3Cpath d='M0 4h13v2H0zM4 0h2v2H4zM2 2h2v2H2zM2 6h2v2H2zM4 8h2v2H4z'/%3E%3C/svg%3E");
+  --glyph-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M0 4h2v2H0zM2 6h2v2H2zM4 8h2v2H4zM6 6h2v2H6zM8 4h2v2H8zM10 2h2v2h-2zM4 6h2v2H4z'/%3E%3C/svg%3E");
+  --glyph-cross: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M0 0h2v2H0zM2 2h2v2H2zM4 4h2v2H4zM6 6h2v2H6zM8 8h2v2H8zM8 0h2v2H8zM6 2h2v2H6zM2 6h2v2H2zM0 8h2v2H0z'/%3E%3C/svg%3E");
+}
+
+.theme-dark,
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-background: #131316;
+  --color-foreground: #F0F0F2;
+  --color-card: #1A1A1E;
+  --color-muted: #202024;
+  --color-border: #2E2E33;
+  --color-border-strong: #3F3F46;
+  --color-field: #6B6B75;
+  --color-input: #1A1A1E;
+  --color-ring: #F0F0F2;
+
+  --color-strong: #F0F0F2;
+  --color-body: #C2C2C9;
+  --color-subtle: #A1A1AA;
+  --color-faint: #8A8A93;
+  --color-icon-faint: #5C5C66;
+
+  --color-primary: #F0F0F2;
+  --color-primary-foreground: #131316;
+  --color-primary-hover: #E2E2E6;
+  --color-selection: rgb(255 255 255 / 0.16);
+
+  --color-returned-ink: #F97066;
+
+  --shadow-ring: rgb(255 255 255 / 0.1);
+  --shadow-color: rgb(0 0 0 / 0.4);
+}
+
+/* Compact density (an admin console, a dense tool), on a mouse or trackpad only: touch keeps 44px. */
+@media (pointer: fine) {
+  [data-density="compact"] {
+    --control-h: 2.25rem;
+    --control-h-sm: 2rem;
+    --control-h-xs: 1.75rem;
+  }
+}

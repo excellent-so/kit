@@ -146,10 +146,10 @@
         <div class="sg-grid sg-grid--2">
           <div class="ex-card ex-card--tight">
             <div class="ex-card__header"><div class="ex-card__title">In a page</div><div class="ex-card__desc">Link the files, put <code class="ex-code">ex-page</code> on the body, and use the classes.</div></div>
-            <pre class="ex-pre">&lt;link rel="stylesheet" href="@excellent-so/kit/fonts.css"&gt;
-&lt;link rel="stylesheet" href="@excellent-so/kit/tokens.css"&gt;
-&lt;link rel="stylesheet" href="@excellent-so/kit/kit.css"&gt;
-&lt;script src="@excellent-so/kit/kit.js" defer&gt;&lt;/script&gt;
+            <pre class="ex-pre">&lt;link rel="stylesheet" href="node_modules/@excellent-so/kit/fonts.css"&gt;
+&lt;link rel="stylesheet" href="node_modules/@excellent-so/kit/tokens.css"&gt;
+&lt;link rel="stylesheet" href="node_modules/@excellent-so/kit/kit.css"&gt;
+&lt;script src="node_modules/@excellent-so/kit/kit.js" defer&gt;&lt;/script&gt;
 
 &lt;button class="ex-btn"&gt;Run the check&lt;/button&gt;
 &lt;span class="ex-badge ex-badge--verified"&gt;Verified&lt;/span&gt;</pre>
@@ -166,7 +166,7 @@ npx @excellent-so/kit sync viewer/index.html --check</pre>
           </div>
           <div class="ex-card ex-card--tight">
             <div class="ex-card__header"><div class="ex-card__title">With Tailwind or a native app</div><div class="ex-card__desc"><code class="ex-code">tokens.json</code> has every value, light, dark and compact, to map into a theme.</div></div>
-            <pre class="ex-pre">import tokens from '@excellent-so/kit/tokens.json'
+            <pre class="ex-pre">import tokens from '@excellent-so/kit/tokens.json' with { type: 'json' }
 // tokens.light['--color-strong']  → "#0E0E0E"
 // tokens.dark['--color-strong']   → "#F0F0F2"</pre>
           </div>
@@ -505,7 +505,6 @@ synced  viewer/index.html</pre>
     });
   }, { rootMargin: '-30% 0px -60% 0px' });
   document.querySelectorAll('#top, .sg-section').forEach(function (s) { io.observe(s); });
-  document.querySelectorAll('.ex-sidebar .ex-nav a').forEach(function (a) { a.addEventListener('click', function () { shell.removeAttribute('data-nav-open'); }); });
   var dlg = document.getElementById('demo-dialog');
   document.getElementById('open-dialog').addEventListener('click', function () { dlg.showModal(); });
   dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });

@@ -2,14 +2,16 @@
 // where the rules put them, every token a part uses exists, nothing ships a font it may not, and sync works.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync, mkdtempSync, readdirSync, statSync } from 'node:fs';
-import { execFileSync, spawnSync } from 'node:child_process';
+import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, copyFileSync, readdirSync, statSync } from 'node:fs';
+import { execFileSync, spawn, spawnSync } from 'node:child_process';
+import { createServer } from 'node:net';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { fileURLToPath } from 'node:url';
 import { parse } from '../scripts/tokens-json.mjs';
 import { css, sync, BEGIN, END, JS_BEGIN, JS_END } from '../lib/sync.mjs';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const read = (f) => readFileSync(join(ROOT, f), 'utf8');
 const T = parse(read('tokens.css'));
 const theme = (name) => ({ ...T.light, ...(name === 'dark' ? T.dark : {}) });
@@ -115,4 +117,47 @@ test('sync writes kit.js between the script markers when a page has them, and fo
   const withFonts = sync(page, { fonts: true });
   assert.ok(withFonts.includes('font-family: "Geist"; src: url("data:font/woff2;base64,'));
   assert.ok(sync(`<style>${BEGIN}${END}</style>`).length > 0, 'the script markers are optional');
+});
+
+test('the command says what to do, in one line, when it is used wrong', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'ex-kit-'));
+  const bin = join(ROOT, 'bin/excellent-kit.mjs');
+  const run = (...a) => spawnSync(process.execPath, [bin, ...a], { cwd: dir, encoding: 'utf8' });
+  const page = join(dir, 'page.html');
+  writeFileSync(page, `<style>${BEGIN}${END}</style>`);
+  const oneLine = (r, re) => { assert.equal(r.status, 2); assert.match(r.stderr, re); assert.equal(r.stderr.trim().split('\n').length, 1, r.stderr); };
+  oneLine(run('sync', page, '--chek'), /^excellent-kit: unknown option "--chek"/);
+  assert.equal(readFileSync(page, 'utf8'), `<style>${BEGIN}${END}</style>`, 'a mistyped --check writes nothing');
+  oneLine(run('sync'), /sync needs a page/);
+  oneLine(run('sync', 'missing.html'), /missing\.html: no such file/);
+  oneLine(run('sync', '.'), /is a folder/);
+  oneLine(run('synk', page), /unknown command "synk"/);
+  oneLine(run('css', '--check'), /--check only works with sync/);
+  assert.equal(run('--version').stdout.trim(), JSON.parse(read('package.json')).version);
+  assert.match(run('-h').stdout, /Exit codes/);
+  const stale = run('sync', page, '--check', '--no-compat');
+  assert.equal(stale.status, 1);
+  assert.match(stale.stderr, /run: excellent-kit sync \S+page\.html --no-compat\)/);
+});
+
+test('npm run tokens and the styleguide server work from a folder with a space in its name', async () => {
+  const dir = join(mkdtempSync(join(tmpdir(), 'ex-kit-')), 'with space');
+  mkdirSync(join(dir, 'scripts'), { recursive: true });
+  for (const f of ['tokens.css', 'scripts/tokens-json.mjs', 'scripts/serve.mjs']) copyFileSync(join(ROOT, f), join(dir, f));
+  execFileSync(process.execPath, [join(dir, 'scripts/tokens-json.mjs')]);
+  assert.deepEqual(JSON.parse(readFileSync(join(dir, 'tokens.json'), 'utf8')), T);
+
+  const port = await new Promise((res) => { const s = createServer().listen(0, '127.0.0.1', () => { const p = s.address().port; s.close(() => res(p)); }); });
+  const srv = spawn(process.execPath, [join(dir, 'scripts/serve.mjs')], { env: { ...process.env, PORT: String(port) } });
+  try {
+    await new Promise((res) => srv.stdout.once('data', res));
+    const r = await fetch(`http://127.0.0.1:${port}/tokens.css`);
+    assert.equal(r.status, 200);
+    // A second server on the same port says so in one line.
+    const busy = spawnSync(process.execPath, [join(dir, 'scripts/serve.mjs')], { env: { ...process.env, PORT: String(port) }, encoding: 'utf8' });
+    assert.equal(busy.status, 1);
+    assert.match(busy.stderr, /^Port \d+ is in use\. .*PORT=4791 npm run styleguide\n$/);
+  } finally {
+    srv.kill();
+  }
 });
